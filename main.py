@@ -25,8 +25,12 @@ yvel = 0
 w = (35, 10)
 
 while True:
-    os.system("cls")
-
+    
+    try:
+        os.system("cls")
+    except:
+        os.system("clear")
+        
     print_game()
 
     yvel -= g
