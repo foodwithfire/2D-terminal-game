@@ -1,42 +1,74 @@
-import os, time
+import os, sys, time
+try:
+    import keyboard
+except:
+    print("Error : Can't import keyboard.\n Please download the 'keyboard' module --> Enter 'pip install keyboard' in the terminal.")
+    sys.exit()
 
 
-def print_game():
+# Player position
+px = 17
+py = 1
+
+pdir = (0, 0)
+
+# Size of the windows
+w = (35, 10)
+
+# Game loop
+while True:
+
+    # Clear console
+
+    try:
+        # windows
+        os.system("cls")
+    except:
+        # linux
+        os.system("clear")
+
+    # Print the screen
+
     for y in range(w[1]):
         line = ""
         if y == 0 or y == w[1] - 1:
             for x in range(w[0]):
-                line += "*"
+                line += "-"
         else:
             for x in range(w[0]):
                 if x == 0 or x == w[0] - 1:
-                    line += "*"
+                    line += "|"
                 elif x == int(px) and y == int(py):
-                    line += "@"
+                    line += "#"
                 else:
                     line += " "
         print(line)
 
+    # Movements
 
-px = 17
-py = 1
-g = 0.1
-yvel = 0
-w = (35, 10)
+    pdir = [0, 0]
+    print("Press [z], [q], [s] or [d] to move.")
 
-while True:
-    
-    try:
-        os.system("cls")
-    except:
-        os.system("clear")
-        
-    print_game()
+    pdir[0] = keyboard.is_pressed("d") - keyboard.is_pressed("q")
+    pdir[1] = keyboard.is_pressed("s") - keyboard.is_pressed("z")
 
-    yvel -= g
-    py -= yvel
+    px += pdir[0]
+    py += pdir[1]
+    print(pdir)
 
+    # Collisions
+
+    if px < 1:
+        px = 1
+    if px > w[0] - 2:
+        px = w[0] - 2
+    if py < 1:
+        py = 1
     if py > w[1] - 2:
-        yvel = 1.2
+        py = w[1] - 2
+
+    print(px, " ", py)
+
+    # 0.1s pause
 
     time.sleep(0.1)
