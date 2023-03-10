@@ -54,7 +54,6 @@ while True:
 
     px += pdir[0]
     py += pdir[1]
-    print(pdir)
 
     # Collisions
 
@@ -66,8 +65,6 @@ while True:
         py = 1
     if py > w[1] - 2:
         py = w[1] - 2
-
-    print(px, " ", py)
 
     # 0.1s pause
 
