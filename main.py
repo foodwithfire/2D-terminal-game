@@ -2,7 +2,7 @@ import os, sys, time
 try:
     import keyboard
 except:
-    print("Error : Can't import keyboard.\n Please download the 'keyboard' module --> Enter 'pip install keyboard' in the terminal.")
+    print("Error : Can't import keyboard.\n Please download the 'keyboard' module --> Enter 'pip install keyboard' in the terminal.\nNote : this will only work if you're using an IDE (like PyCharm for example.")
     sys.exit()
 
 
