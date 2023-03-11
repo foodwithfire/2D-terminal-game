@@ -1,4 +1,6 @@
 import os, sys, time
+from random import randint
+
 try:
     import keyboard
 except:
@@ -6,20 +8,33 @@ except:
     sys.exit()
 
 
+# Size of the windows
+w = (35, 10)
+
 # Player position
 px = 17
 py = 1
 
 pdir = (0, 0)
 
-# Size of the windows
-w = (35, 10)
+# Obstacles position
+obs = []
 
-# Game loop
-while True:
+for i in range(randint(2, 4)):
+    x = px
+    while x == px:
+        x = randint(1, w[0] - 2)
+    obs.append(x)
+    y = py
+    while y == py:
+        y = randint(1, w[1] - 2)
+    obs.append(y)
 
-    # Clear console
+# Update method
 
+
+def update():
+    # clear
     try:
         # windows
         os.system("cls")
@@ -27,27 +42,45 @@ while True:
         # linux
         os.system("clear")
 
-    # Print the screen
-
+    # print
     for y in range(w[1]):
         line = ""
         if y == 0 or y == w[1] - 1:
             for x in range(w[0]):
+                # Walls
                 line += "-"
         else:
             for x in range(w[0]):
+                idx = 0
+                for i in range(int(len(obs) / 2)):
+                    if x == obs[idx] and y == obs[idx + 1]:
+                        # Obstacles
+                        temp = list(line)
+                        temp[x - 1] = "#"
+                        line = ""
+                        for letter in temp:
+                            line += letter
+                    idx += 2
                 if x == 0 or x == w[0] - 1:
+                    # Walls
                     line += "|"
                 elif x == int(px) and y == int(py):
-                    line += "#"
+                    # Player
+                    line += "@"
                 else:
                     line += " "
         print(line)
+    print("Press [z], [q], [s] or [d] to move.")
+    print(f"x: {px}  |  y: {py}")
+
+
+# Game loop
+update()
+while True:
 
     # Movements
 
     pdir = [0, 0]
-    print("Press [z], [q], [s] or [d] to move.")
 
     pdir[0] = keyboard.is_pressed("d") - keyboard.is_pressed("q")
     pdir[1] = keyboard.is_pressed("s") - keyboard.is_pressed("z")
@@ -66,6 +99,7 @@ while True:
     if py > w[1] - 2:
         py = w[1] - 2
 
+    if not pdir[0] == 0 or not pdir[1] == 0:
+        update()
     # 0.1s pause
-
     time.sleep(0.1)
