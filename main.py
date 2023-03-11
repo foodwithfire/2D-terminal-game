@@ -101,5 +101,5 @@ while True:
 
     if not pdir[0] == 0 or not pdir[1] == 0:
         update()
-    # 0.1s pause
-    time.sleep(0.1)
+    # 0.05s pause
+    time.sleep(0.05)
