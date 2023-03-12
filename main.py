@@ -22,15 +22,26 @@ pdir = (0, 0)
 # Obstacles position
 obs = []
 
-for i in range(randint(1, int((w[0]*w[1])/20))):
+for i in range(randint(int((w[0]*w[1])/160), int((w[0]*w[1])/80))):
     x = px
     while x == px:
         x = randint(1, w[0] - 2)
     obs.append(x)
+
     y = py
     while y == py:
         y = randint(1, w[1] - 2)
     obs.append(y)
+
+    for i in range(randint(1, 4)):
+        x += randint(-1, 1)
+        y += randint(0, 1)
+        while x <= 1 or x == w[0 - 1]:
+            x += randint(-1, 1)
+        while y <= 1 or y == w[1 - 1]:
+            y += randint(-1, 1)
+        obs.append(x)
+        obs.append(y)
 
 
 # Update method
@@ -84,9 +95,9 @@ def wallcollision():
 # Game loop
 oldpx = 0
 oldpy = 0
+
 update()
 while True:
-
     # Movements
     pdir = [0, 0]
     pdir[0] = keyboard.is_pressed("d") - keyboard.is_pressed("q")
@@ -111,3 +122,5 @@ while True:
 
     oldpx = px
     oldpy = py
+
+    time.sleep(0.02)
