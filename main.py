@@ -1,6 +1,6 @@
 import sys
 import time
-from os import system
+import os
 from random import randint
 
 try:
@@ -22,7 +22,7 @@ pdir = (0, 0)
 # Obstacles position
 obs = []
 
-for i in range(randint(1, 100)):
+for i in range(randint(1, int((w[0]*w[1])/20))):
     x = px
     while x == px:
         x = randint(1, w[0] - 2)
@@ -35,13 +35,12 @@ for i in range(randint(1, 100)):
 
 # Update method
 def update():
+    os.system("cls")
     # print window
     for y in range(w[1]):
         line = ""
         if y == 0 or y == w[1] - 1:
-            for x in range(w[0]):
-                # Walls
-                line += "-"
+            line += "-" * w[0]
         else:
             for x in range(w[0]):
                 idx = 0
@@ -112,6 +111,3 @@ while True:
 
     oldpx = px
     oldpy = py
-
-    # 0.05s pause
-    time.sleep(0.05)
