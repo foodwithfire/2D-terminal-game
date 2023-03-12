@@ -1,2 +1,3 @@
-■
-□
+Walls : | -
+Player : @
+Obstacles : #
