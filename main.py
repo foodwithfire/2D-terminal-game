@@ -1,4 +1,6 @@
-import os, sys, time
+import sys
+import time
+from os import system
 from random import randint
 
 try:
@@ -9,18 +11,18 @@ except:
 
 
 # Size of the windows
-w = (35, 10)
+w = (80, 20)
 
 # Player position
-px = 17
-py = 1
+px = int(w[0] / 2)
+py = int(w[1] / 2)
 
 pdir = (0, 0)
 
 # Obstacles position
 obs = []
 
-for i in range(randint(2, 4)):
+for i in range(randint(1, 100)):
     x = px
     while x == px:
         x = randint(1, w[0] - 2)
@@ -30,19 +32,10 @@ for i in range(randint(2, 4)):
         y = randint(1, w[1] - 2)
     obs.append(y)
 
+
 # Update method
-
-
 def update():
-    # clear
-    try:
-        # windows
-        os.system("cls")
-    except:
-        # linux
-        os.system("clear")
-
-    # print
+    # print window
     for y in range(w[1]):
         line = ""
         if y == 0 or y == w[1] - 1:
@@ -74,21 +67,10 @@ def update():
     print(f"x: {px}  |  y: {py}")
 
 
-# Game loop
-update()
-while True:
-
-    # Movements
-
-    pdir = [0, 0]
-
-    pdir[0] = keyboard.is_pressed("d") - keyboard.is_pressed("q")
-    pdir[1] = keyboard.is_pressed("s") - keyboard.is_pressed("z")
-
-    px += pdir[0]
-    py += pdir[1]
-
-    # Collisions
+# Check wall collisions
+def wallcollision():
+    global px
+    global py
 
     if px < 1:
         px = 1
@@ -99,7 +81,37 @@ while True:
     if py > w[1] - 2:
         py = w[1] - 2
 
+
+# Game loop
+oldpx = 0
+oldpy = 0
+update()
+while True:
+
+    # Movements
+    pdir = [0, 0]
+    pdir[0] = keyboard.is_pressed("d") - keyboard.is_pressed("q")
+    pdir[1] = keyboard.is_pressed("s") - keyboard.is_pressed("z")
+
+    px += pdir[0]
+    py += pdir[1]
+
+    # Collisions
+    wallcollision()
+
+    idx = 0
+    for i in range(int(len(obs) / 2)):
+        if obs[idx] - 1 == px and obs[idx + 1] == py:
+            px = oldpx
+            py = oldpy
+            pdir = [0, 0]
+        idx += 2
+
     if not pdir[0] == 0 or not pdir[1] == 0:
         update()
+
+    oldpx = px
+    oldpy = py
+
     # 0.05s pause
     time.sleep(0.05)
