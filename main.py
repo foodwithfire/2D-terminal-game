@@ -21,6 +21,10 @@ pdir = (0, 0)
 
 # Obstacles position
 obs = []
+signs = []
+signs.append(20)
+signs.append(5)
+signs.append("Hello world")
 
 for i in range(randint(int((w[0]*w[1])/160), int((w[0]*w[1])/80))):
     x = px
@@ -50,7 +54,6 @@ def update():
     # load window
     screen = ""
 
-    screen += "   . .       .  .       .   .    . .       .         . .       . .       .  .          . .       . .       . .   \n.+'|=|`+. .+'|  |`.  .+'|.+'| .+'|=|`+. .+'|      .+'|=|`+. .+'|=|`+. .+'|  |`.     .+'|=|`+. .+'|=|`+. .+'|=|`+. \n|  | `+.| |  | .+ |  |  ||  | |  | |  | |  |      |  | |  | |  | `+.| |  | .+ |     |  | |  | |  | |  | |  | `+.| \n|  | .    |  |=|.+'  `+.`'.+' |  |'. '. |  |      |  | |  | |  |      |  |=|.+'     |  |'. '. |  |=`++' |  | .    \n`+.|=|`+. |  |  |`+.   |  |   |  | |  | |  |      |  | |  | |  |      |  |  |`+.    |  | |  | |  |      |  | |`+. \n.    |  | |  |  |  |   |  |   |  | |  | |  |    . |  | |  | |  |    . |  |  |  |    |  | |  | |  |      |  | `. | \n|`+. |  | |  |  |  |   |  |   |  | |  | |  | .+'| |  | |  | |  | .+'| |  |  |  |    |  | |  | |  |      |  | .+ | \n`+.|=|.+' `+.|  |..|   |.+'   `+.|=|.+' `+.|=|.+' `+.|=|.+' `+.|=|.+' `+.|  |..|    `+.| |.+' `+.|      `+.|=|.+'  V0.1\n"
     for y in range(w[1]):
         line = ""
         if y == 0:
@@ -70,14 +73,25 @@ def update():
                         for letter in temp:
                             line += letter
                     idx += 2
+
+                idx = 0
+                for i in range(int(len(signs) / 3)):
+                    if x == signs[idx] and y == signs[idx + 1]:
+                        temp = list(line)
+                        temp[x - 1] = "‼"
+                        line = ""
+                        for letter in temp:
+                            line += letter
+                    idx += 3
+
                 if x == 0 or x == w[0] - 1:
                     # Walls
                     line += "║"
                 elif x == int(px) and y == int(py):
                     # Player
-                    line += "@"
+                    line += "◯"
                 else:
-                    line += ":"
+                    line += " "
         screen += line + "\n"
 
     # print window
@@ -123,6 +137,13 @@ while True:
             py = oldpy
             pdir = [0, 0]
         idx += 2
+
+    idx = 0
+    for i in range(int(len(signs) / 3)):
+        if signs[idx] - 1 == px and signs[idx + 1] == py:
+            update()
+            print(f"Sign : '{signs[idx + 2]}'")
+        idx += 3
 
     if not pdir[0] == 0 or not pdir[1] == 0:
         update()
