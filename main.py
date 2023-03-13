@@ -47,11 +47,17 @@ for i in range(randint(int((w[0]*w[1])/160), int((w[0]*w[1])/80))):
 # Update method
 def update():
     os.system("cls")
-    # print window
+    # load window
+    screen = ""
+
+    screen += "   . .       .  .       .   .    . .       .         . .       . .       .  .          . .       . .       . .   \n.+'|=|`+. .+'|  |`.  .+'|.+'| .+'|=|`+. .+'|      .+'|=|`+. .+'|=|`+. .+'|  |`.     .+'|=|`+. .+'|=|`+. .+'|=|`+. \n|  | `+.| |  | .+ |  |  ||  | |  | |  | |  |      |  | |  | |  | `+.| |  | .+ |     |  | |  | |  | |  | |  | `+.| \n|  | .    |  |=|.+'  `+.`'.+' |  |'. '. |  |      |  | |  | |  |      |  |=|.+'     |  |'. '. |  |=`++' |  | .    \n`+.|=|`+. |  |  |`+.   |  |   |  | |  | |  |      |  | |  | |  |      |  |  |`+.    |  | |  | |  |      |  | |`+. \n.    |  | |  |  |  |   |  |   |  | |  | |  |    . |  | |  | |  |    . |  |  |  |    |  | |  | |  |      |  | `. | \n|`+. |  | |  |  |  |   |  |   |  | |  | |  | .+'| |  | |  | |  | .+'| |  |  |  |    |  | |  | |  |      |  | .+ | \n`+.|=|.+' `+.|  |..|   |.+'   `+.|=|.+' `+.|=|.+' `+.|=|.+' `+.|=|.+' `+.|  |..|    `+.| |.+' `+.|      `+.|=|.+'  V0.1\n"
     for y in range(w[1]):
         line = ""
-        if y == 0 or y == w[1] - 1:
-            line += "-" * w[0]
+        if y == 0:
+            line += "╔═" + "═"*(w[0]-4) + "═╗"
+
+        elif y == w[1] - 1:
+            line += "╚═" + "═"*(w[0]-4) + "═╝"
         else:
             for x in range(w[0]):
                 idx = 0
@@ -66,15 +72,16 @@ def update():
                     idx += 2
                 if x == 0 or x == w[0] - 1:
                     # Walls
-                    line += "|"
+                    line += "║"
                 elif x == int(px) and y == int(py):
                     # Player
                     line += "@"
                 else:
-                    line += " "
-        print(line)
-    print("Press [z], [q], [s] or [d] to move.")
-    print(f"x: {px}  |  y: {py}")
+                    line += ":"
+        screen += line + "\n"
+
+    # print window
+    print(f"{screen}Press [z], [q], [s] or [d] to move.\nx: {px}  |  y: {py}")
 
 
 # Check wall collisions
