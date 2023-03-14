@@ -6,4 +6,4 @@ Controls : zqsd (qwerty coming soon)
 
 /!\ IMPORTANT /!\
 - You need to run the code in the terminal to make it work.
-- If you're using pycharm, click on run at the top of the screen/edit configurations/select "emulate in terminal"
+- If you're using pycharm, click on the run menu at the top of the screen/edit configurations/select "emulate in terminal"
