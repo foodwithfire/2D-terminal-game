@@ -1,8 +1,7 @@
-import sys
-import time
-import os
+# Imports
+import sys, time, os
 from random import randint
-
+os.system("")
 try:
     import keyboard
 except:
@@ -39,10 +38,10 @@ for i in range(randint(int((w[0]*w[1])/160), int((w[0]*w[1])/80))):
 
     for i in range(randint(1, 4)):
         x += randint(-1, 1)
-        y += randint(0, 1)
-        while x <= 1 or x == w[0 - 1]:
+        y += randint(-1, 1)
+        while x <= 2 or x > w[0 - 2]:
             x += randint(-1, 1)
-        while y <= 1 or y == w[1 - 1]:
+        while y <= 2 or y > w[1 - 2]:
             y += randint(-1, 1)
         obs.append(x)
         obs.append(y)
@@ -50,7 +49,6 @@ for i in range(randint(int((w[0]*w[1])/160), int((w[0]*w[1])/80))):
 
 # Update method
 def update():
-    os.system("cls")
     # load window
     screen = ""
 
@@ -78,7 +76,7 @@ def update():
                 for i in range(int(len(signs) / 3)):
                     if x == signs[idx] and y == signs[idx + 1]:
                         temp = list(line)
-                        temp[x - 1] = "‼"
+                        temp[x - 1] = "?"
                         line = ""
                         for letter in temp:
                             line += letter
@@ -95,7 +93,7 @@ def update():
         screen += line + "\n"
 
     # print window
-    print(f"{screen}Press [z], [q], [s] or [d] to move.\nx: {px}  |  y: {py}")
+    print(f"\033[0;0H{screen}Press [z], [q], [s] or [d] to move.\nx: {px}  |  y: {py}")
 
 
 # Check wall collisions
@@ -116,7 +114,6 @@ def wallcollision():
 # Game loop
 oldpx = 0
 oldpy = 0
-
 update()
 while True:
     # Movements
@@ -137,14 +134,14 @@ while True:
             py = oldpy
             pdir = [0, 0]
         idx += 2
-
-    idx = 0
-    for i in range(int(len(signs) / 3)):
-        if signs[idx] - 1 == px and signs[idx + 1] == py:
-            update()
-            print(f"Sign : '{signs[idx + 2]}'")
-        idx += 3
-
+    """
+        idx = 0
+        for i in range(int(len(signs) / 3)):
+            if signs[idx] - 1 == px and signs[idx + 1] == py:
+                update()
+                print(f"Sign : '{signs[idx + 2]}'")
+            idx += 3
+    """
     if not pdir[0] == 0 or not pdir[1] == 0:
         update()
 
