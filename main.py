@@ -25,7 +25,7 @@ signs.append(20)
 signs.append(5)
 signs.append("Hello world")
 
-for i in range(randint(int((w[0]*w[1])/160), int((w[0]*w[1])/80))):
+for i in range(randint(int((w[0]*w[1])/160), int((w[0]*w[1])/20))):
     x = px
     while x == px:
         x = randint(1, w[0] - 2)
