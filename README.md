@@ -1,6 +1,14 @@
-# 2D-terminal-game
+# 2D terminal game
+# Wtf is it ?
+This project is a 2D open world game that runs in the terminal with pseudo-graphics (a pseudo-graphic example : (╯°□°）╯︵ ┻━┻ )
 
-This is a prototype for a 2D game with pseudo-graphics that runs in the terminal.
+# Why tf are you doing this ?
+I'm doing this because my friend YouLeGamer and I are competing to prove which programming language is better between Python and Batch, so we decided to make a RPG game that runs in the terminal with pseudo-graphics.
+Link to his github : https://github.com/YouLeGamer
+
+# How tf that it works ???
+
+So basically
 
 Controls : zqsd (qwerty coming soon)
 
