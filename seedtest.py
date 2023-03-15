@@ -25,7 +25,7 @@ signs.append(20)
 signs.append(5)
 signs.append("Hello world")
 
-for i in range(randint(int((w[0]*w[1])/160), int((w[0]*w[1])/80))):
+for i in range(randint(int((w[0]*w[1])/160), int((w[0]*w[1])/20))):
     x = px
     while x == px:
         x = randint(1, w[0] - 2)
@@ -45,6 +45,11 @@ for i in range(randint(int((w[0]*w[1])/160), int((w[0]*w[1])/80))):
             y += randint(-1, 1)
         obs.append(x)
         obs.append(y)
+
+
+code = {
+    " ": 10, "\n": 11, "╔": 12, "╗": 13, "╚": 14, "╝": 15, "═": 16, "║": 17, "@": 18, "#": 19, "?": 20, "◯": 21
+}
 
 
 def genworld():
@@ -93,25 +98,24 @@ def genworld():
 
 
 def encodegen(g):
-    code = {
-        " ": 10, "\n": 11, "╔": 12, "╗": 13, "╚": 14, "╝": 15, "═": 16, "║": 17, "@": 18, "#": 19, "?": 20, "◯": 21
-    }
-
-    code_keys = list(code.values())
     seed = ""
     for char in g:
         seed += str(code[char])
-    print(seed)
-    sys.exit()
+    return seed
 
+
+def decodeseed(seed):
+    screen = ""
+    idx = 0
+    for i in range(int(len(seed)/2)):
+        screen += list(code.keys())[list(code.values()).index(int(str(seed[idx] + str(seed[idx + 1]))))]
+        idx += 2
+    return screen
 
 # Update method
 def update():
-    # load window
-
-
     # print window
-    print(f"\033[0;0H{None}Press [z], [q], [s] or [d] to move.\nx: {px}  |  y: {py}")
+    print(f"\033[0;0H{decodeseed(encodegen(genworld()))}\nPress [z], [q], [s] or [d] to move.\nx: {px}  |  y: {py}")
 
 
 # Check wall collisions
@@ -134,4 +138,4 @@ oldpx = 0
 oldpy = 0
 update()
 while True:
-    encodegen(genworld())
+    update()
