@@ -20,39 +20,39 @@ pdir = (0, 0)
 
 # Obstacles position
 obs = []
-signs = []
-signs.append(20)
-signs.append(5)
-signs.append("Hello world")
 
-for i in range(randint(int((w[0]*w[1])/160), int((w[0]*w[1])/20))):
-    x = px
-    while x == px:
-        x = randint(1, w[0] - 2)
-    obs.append(x)
-
-    y = py
-    while y == py:
-        y = randint(1, w[1] - 2)
-    obs.append(y)
-
-    for i in range(randint(1, 4)):
-        x += randint(-1, 1)
-        y += randint(-1, 1)
-        while x <= 2 or x > w[0 - 2]:
-            x += randint(-1, 1)
-        while y <= 2 or y > w[1 - 2]:
-            y += randint(-1, 1)
-        obs.append(x)
-        obs.append(y)
-
-
+# decoding dict
 code = {
     " ": 10, "\n": 11, "╔": 12, "╗": 13, "╚": 14, "╝": 15, "═": 16, "║": 17, "@": 18, "#": 19, "?": 20, "◯": 21
 }
 
 
 def genworld():
+    # Obstacles' position
+    for i in obs:
+        del obs[0]
+    for i in range(randint(int((w[0] * w[1]) / 160), int((w[0] * w[1]) / 20))):
+        x = px
+        while x == px:
+            x = randint(1, w[0] - 2)
+        obs.append(x)
+
+        y = py
+        while y == py:
+            y = randint(1, w[1] - 2)
+        obs.append(y)
+
+        for i in range(randint(1, 4)):
+            x += randint(-1, 1)
+            y += randint(-1, 1)
+            while x <= 2 or x > w[0 - 2]:
+                x += randint(-1, 1)
+            while y <= 2 or y > w[1 - 2]:
+                y += randint(-1, 1)
+            obs.append(x)
+            obs.append(y)
+
+    # gen screen
     screen = ""
 
     for y in range(w[1]):
@@ -75,31 +75,24 @@ def genworld():
                             line += letter
                     idx += 2
 
-                idx = 0
-                for i in range(int(len(signs) / 3)):
-                    if x == signs[idx] and y == signs[idx + 1]:
-                        temp = list(line)
-                        temp[x - 1] = "?"
-                        line = ""
-                        for letter in temp:
-                            line += letter
-                    idx += 3
-
                 if x == 0 or x == w[0] - 1:
                     # Walls
                     line += "║"
                 elif x == int(px) and y == int(py):
-                    # Player
-                    line += "◯"
+                    # Temp player
+                    line += " "
                 else:
                     line += " "
         screen += line + "\n"
     return screen
 
 
-def encodegen(g):
+gen = genworld()
+
+
+def encodegen():
     seed = ""
-    for char in g:
+    for char in gen:
         seed += str(code[char])
     return seed
 
@@ -115,7 +108,8 @@ def decodeseed(seed):
 # Update method
 def update():
     # print window
-    print(f"\033[0;0H{decodeseed(encodegen(genworld()))}\nPress [z], [q], [s] or [d] to move.\nx: {px}  |  y: {py}")
+    window = decodeseed(encodegen())
+    print(f"\033[0;0H{window}Press [z], [q], [s] or [d] to move.\nx: {px}  |  y: {py}")
 
 
 # Check wall collisions
@@ -138,4 +132,36 @@ oldpx = 0
 oldpy = 0
 update()
 while True:
-    update()
+    # Movements
+    pdir = [0, 0]
+    pdir[0] = keyboard.is_pressed("d") - keyboard.is_pressed("q")
+    pdir[1] = keyboard.is_pressed("s") - keyboard.is_pressed("z")
+
+    px += pdir[0]
+    py += pdir[1]
+
+    # Collisions
+    wallcollision()
+
+    idx = 0
+    for i in range(int(len(obs) / 2)):
+        if obs[idx] - 1 == px and obs[idx + 1] == py:
+            px = oldpx
+            py = oldpy
+            pdir = [0, 0]
+        idx += 2
+    """
+        idx = 0
+        for i in range(int(len(signs) / 3)):
+            if signs[idx] - 1 == px and signs[idx + 1] == py:
+                update()
+                print(f"Sign : '{signs[idx + 2]}'")
+            idx += 3
+    """
+    if not pdir[0] == 0 or not pdir[1] == 0:
+        update()
+
+    oldpx = px
+    oldpy = py
+
+    time.sleep(0.02)
