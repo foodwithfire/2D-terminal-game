@@ -1,6 +1,6 @@
 # 2D terminal game
 # Wtf is it ?
-This project is a 2D open world game that runs in the terminal with pseudo-graphics (a pseudo-graphic example : (╯°□°）╯︵ ┻━┻ )
+This project is a 2D open world game (It's not really open world right now but at the end it will be) that runs in the terminal with pseudo-graphics (a pseudo-graphic example : (╯°□°）╯︵ ┻━┻ ).
 
 # Why tf are you doing this ?
 I'm doing this because my friend YouLeGamer and I are competing to prove which programming language is better between Python and Batch, so we decided to make a RPG game that runs in the terminal with pseudo-graphics. I code in Python and my friend in Batch.
