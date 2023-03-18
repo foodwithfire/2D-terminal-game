@@ -6,7 +6,7 @@ This project is a 2D open world game (It's not really open world right now but a
 I'm doing this because my friend YouLeGamer and I are competing to prove which programming language is better between Python and Batch, so we decided to make a RPG game that runs in the terminal with pseudo-graphics. I code in Python and my friend in Batch.
 Link to YouLeGamer's github : https://github.com/YouLeGamer
 
-# How tf that it works ???
+# How tf does it works ???
 So basically the code create a simple empty screen with walls then it addss obstacles ("#") to it thanks to a list with random positions that was created at the beginning of the code, then it place the player in the screen at his x and y positions.
 
 For now you can only play in azerty (zqsd) but don't worry I'll add Controls Settings later.
